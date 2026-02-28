@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Real OCR Web</title>
+</head>
+<body>
+
+<h2>Upload Image for OCR</h2>
+
+<input type="file" id="imageInput">
+<button onclick="readText()">Extract Text</button>
+
+<p id="result"></p>
+
+<script src="https://cdn.jsdelivr.net/npm/tesseract.js@4/dist/tesseract.min.js"></script>
+
+<script>
+function readText() {
+  const file = document.getElementById('imageInput').files[0];
+  if (!file) return alert("Upload image first");
+
+  Tesseract.recognize(
+    file,
+    'eng',
+    { logger: m => console.log(m) }
+  ).then(({ data: { text } }) => {
+    document.getElementById('result').innerText = text;
+  });
+}
+</script>
+
+</body>
+</html>
